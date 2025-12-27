@@ -1,30 +1,26 @@
-package org.example;
+package org.example.algorithm;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
-public class Main {
-    public static void main(String[] args) {
-        String s = "PAYPALISHIRING";
-        System.out.println(convert(s, 3));
-    }
+public class Convert {
 
+//    Z 字形变换
     public static String convert(String s, int numRows) {
         if (numRows < 2) return s;
         char[] chars = s.toCharArray();
         int length = chars.length;
         List<StringBuilder> result1 = new ArrayList<>();
         for (int i = 0; i < numRows; i++) result1.add(new StringBuilder());
-        int cyclecount = 2 * numRows -2;
+        int cycleNum = 2 * numRows -2;
         for (int i = 1; i <= length; i++) {
-            int index = i % cyclecount;
+            int index = i % cycleNum;
             if (index == 0) {
-                index = cyclecount;
+                index = cycleNum;
             }
             int y;
             if (index <= numRows) {
-                y = index-1;
+                y = index - 1;
             } else {
                 y = 2 * numRows - index -1;
             }
@@ -36,7 +32,4 @@ public class Main {
         }
         return result.toString();
     }
-
-
-
 }

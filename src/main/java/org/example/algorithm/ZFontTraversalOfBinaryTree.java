@@ -2,37 +2,32 @@ package org.example.algorithm;
 
 import org.example.model.TreeNode;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class ZFontTraversalOfBinaryTree {
     public List<List<Integer>> zFontTraversal(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
-        if (root == null) {return result;}
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-        boolean isOrder = true;
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            LinkedList<TreeNode> temp = new LinkedList<>();
-            for (int i = 0; i < size; i++) {
-                TreeNode node = queue.poll();
-                if (isOrder) {
-                    temp.addLast(node);
+        if (root == null) {
+            return null;
+        }
+        Deque<TreeNode> deque = new ArrayDeque<>();
+        deque.add(root);
+        boolean flag = false;
+        while (!deque.isEmpty()) {
+            LinkedList<Integer> list = new LinkedList<>();
+            int levelSize = deque.size();
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode node = deque.poll();
+                if(flag) {
+                    list.addFirst(node.val);
                 } else {
-                    temp.addFirst(node);
+                    list.addLast(node.val);
                 }
-                if (node.left != null) queue.offer(node.left);
-                if (node.right != null) queue.offer(node.right);
+                if (node.left != null) deque.add(node.left);
+                if (node.right != null) deque.add(node.right);
             }
-            List<Integer> list = new ArrayList<>();
-            for (int i = 0; i < temp.size(); i++) {
-                list.add(temp.get(i).val);
-            }
+            flag = !flag;
             result.add(list);
-            isOrder = !isOrder;
         }
         return result;
     }
